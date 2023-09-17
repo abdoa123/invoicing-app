@@ -74,7 +74,7 @@ class InvoiceController extends Controller
         SendMailJob::dispatch($details);
     
         // Return a response with the created invoice data
-        return response()->json(['invoice' => $invoice], 201);
+        return response()->json(['invoice' => $invoice], 200);
     }
     
 

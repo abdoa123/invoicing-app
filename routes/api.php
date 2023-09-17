@@ -19,9 +19,7 @@ use App\Http\Controllers\ClientController;
 Route::post('register', [PassportAuthController::class, 'register']);
 Route::post('login', [PassportAuthController::class, 'login']);
 
-Route::middleware('auth:api')->get('/refresh-token', function () {
-    return auth()->user()->createToken('Laravel-9-Passport-Auth')->accessToken;
-});
+
 
 Route::middleware('auth:api')->group(function () {
     Route::resource('invoices', InvoiceController::class);
