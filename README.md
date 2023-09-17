@@ -1,64 +1,302 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Laravel Project README
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Project Description
 
-## About Laravel
+This Laravel project is designed to create a robust RESTful API for a web application focused on generating, storing, and sending invoices to clients. Key project details include:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* **Technology Stack:** The application is built using Laravel 8, a popular PHP framework known for its versatility and ease of use, and it utilizes a MySQL database to store and manage data efficiently.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* **Authentication:** User authentication for admin access is implemented using Laravel Passport, providing a secure and token-based authentication system.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* **Background Job Processing:** To enhance performance and responsiveness, the project leverages Laravel Queues for background job processing. This enables the system to handle tasks such as sending emails asynchronously, ensuring a smooth user experience.
 
-## Learning Laravel
+* **Unit Testing:** The project includes a suite of unit tests to verify the functionality and reliability of the admin flow. These tests help maintain code quality and ensure that the application operates as intended.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+With a focus on efficiency, security, and test-driven development, this Laravel application simplifies the process of managing invoices while offering a seamless experience for both administrators and end users.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+----------
 
-## Contributing
+# Getting started
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Installation
 
-## Code of Conduct
+Clone the repository
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    git clone git@github.com:gothinkster/laravel-realworld-example-app.git
 
-## Security Vulnerabilities
+Switch to the repo folder
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    cd invoicing-app
 
-## License
+Install all the dependencies using composer
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    composer install
+
+Copy the example env file and make the required configuration changes in the .env file
+
+    cp .env.example .env
+
+Generate a new application key
+
+    php artisan key:generate
+Install a passport
+    
+    php artisan passport:install
+
+Start the local development server
+
+    php artisan serve
+
+You can now access the server at http://localhost:8000
+
+**command list**
+
+    git clone git@github.com:gothinkster/laravel-realworld-example-app.git
+    cd invoicing-app
+    composer install
+    cp .env.example .env
+    php artisan key:generate
+    php artisan passport:install
+    php artisan serve
+    
+
+***Note*** : i used online host database so no need to migrate and use your local database
+
+    
+
+   
+## Table of Contents
+
+- [API Endpoints](#api-endpoints)
+  - [User Registration](#user-registration)
+  - [User Login](#user-login)
+  - [Invoices](#invoices)
+    - [Create Invoice](#create-invoice)
+    - [Get Invoices by Phone or Email](#get-invoices-by-phone-or-email)
+    - [Update Invoice](#update-invoice)
+    - [Delete Invoice](#delete-invoice)
+  - [Clients](#clients)
+    - [Get All Clients with Pagination](#get-all-clients-with-pagination)
+- [Unit Tests](#unit-tests)
+
+
+## API Endpoints
+
+### User Registration
+
+- **Description:** Register a new user.
+- **HTTP Method:** POST
+- **URL:** `http://127.0.0.1:8000/api/register`
+- **Request Body:** JSON object with user registration data:
+  
+  ```json
+  {
+    "name": "abdo",
+    "email": "abdo_a@yahoo.com",
+    "password": "12345678",
+    "isAdmin": true
+  }
+
+
+### User Login
+
+- **Description:** Authenticate a user.
+- **HTTP Method:** POST
+- **URL:** `http://127.0.0.1:8000/api/login`
+- **Request Body:** JSON object with user registration data:
+  
+  ```json
+  {
+
+    "email": "abdo_a@yahoo.com",
+    "password": "12345678"
+  }
+- **Response:** Access token on successful login or error details.
+-------------------
+### Invoices
+
+### Invoice Creation
+
+- **Description:** Create a new invoice associated with a client. Admins have the flexibility to choose an existing client by providing the `client_id`, or they can create a new client with the provided data. If a user with the same email address and phone number exists, the invoice will be added to the current client.
+
+- **HTTP Method:** POST
+- **URL:** `http://127.0.0.1:8000/api/invoices`
+- **Request Body:** JSON object with invoice creation data.
+
+  - `client_id` (optional): The ID of the existing client associated with the invoice.
+  - `amount` (required): The amount of the invoice.
+  - `due_date` (required): The due date of the invoice in the format 'Y-m-d'.
+  - `full_name` (optional): The full name of the client if `client_id` is not provided.
+  - `mobile_number` (optional): The mobile number of the client if `client_id` is not provided.
+  - `email_address` (optional): The email address of the client if `client_id` is not provided.
+
+- **Response:** If the invoice is created successfully, the response includes the created invoice data with a status code of 200. In case of validation failures or errors, appropriate error messages are returned.
+
+  Example response for a successful invoice creation:
+
+  ```json
+  {
+    "invoice": {
+      "client_id": 4,
+        "amount": 20.5,
+        "due_date": "2023-09-30",
+        "updated_at": "2023-09-17T16:46:51.000000Z",
+        "created_at": "2023-09-17T16:46:51.000000Z",
+        "id": 23
+     
+    }
+  }
+------------------------------------------------
+
+#### Get Invoices by Phone or Email
+
+### Get Invoices by Phone or Email
+
+- **Description:** Retrieve invoices associated with a client by searching for their phone number or email address.
+- **HTTP Method:** GET
+- **URL:** `/api/invoices?search=abdo_201333@hotmail.com`
+- **Query Parameter:**
+  - `search` (required): The phone number or email address to search for.
+
+- **Response:** If a client matching the provided phone number or email address is found, the response includes the list of invoices associated with that client with a status code of 200. If no matching client is found, a "Client not found" message is returned with a status code of 404.
+
+  Example response for successful retrieval of invoices:
+
+  ```json
+  {
+    "invoices": [
+      {
+        "id": 1,
+        "client_id": 123,
+        "amount": 1000,
+        "due_date": "2023-12-31",
+
+      },
+      {
+        "id": 2,
+        "client_id": 123,
+        "amount": 1500,
+        "due_date": "2023-11-15",
+
+      }
+     
+    ]
+  }
+
+------------------------------------------------------------------------
+#### Update Invoice
+
+### Update Invoice and Client Data
+
+- **Description:** Update invoice and client data associated with an invoice.
+- **HTTP Method:** PUT
+- **URL:** `/api/invoices/{id}`
+- **URL Parameters:**
+  - `id` (required): The ID of the invoice to be updated.
+
+- **Request Body:** JSON object with fields to update. You can include any combination of the following fields:
+
+  For Invoice Update:
+  - `amount` (optional): The updated amount of the invoice.
+  - `due_date` (optional): The updated due date of the invoice in the format 'Y-m-d'.
+
+  For Client Update:
+  - `full_name` (optional): The updated full name of the client.
+  - `mobile_number` (optional): The updated mobile number of the client.
+  - `email_address` (optional): The updated email address of the client.
+
+- **Response:** If the updates are successful, the response includes a message indicating that the data has been updated successfully with a status code of 200. If the specified invoice is not found, a "Invoice not found" message is returned with a status code of 404.
+
+  Example request body for updating the invoice amount:
+
+  ```json
+  {
+    "amount": 1500
+  }
+
+------------------------------------------------------------------
+#### Delete Invoice
+
+### Delete Invoice
+
+- **Description:** Delete an existing invoice.
+- **HTTP Method:** DELETE
+- **URL:** `/api/invoices/{id}`
+- **URL Parameters:**
+  - `id` (required): The ID of the invoice to be deleted.
+
+- **Response:** If the specified invoice is found and successfully deleted, the response includes a message indicating that the invoice has been deleted successfully with a status code of 200. If the specified invoice is not found, a "Invoice not found" message is returned with a status code of 404.
+
+  Example response for successful invoice deletion:
+
+  ```json
+  {
+    "message": "Invoice deleted successfully"
+  }
+
+
+### Clients
+
+#### Get All Clients with Pagination
+
+### Get All Clients with Pagination and Filtering
+
+- **Description:** Retrieve a paginated list of clients with optional filtering by full name, mobile number, or email address.
+- **HTTP Method:** GET
+- **URL:** `/api/clients`
+- **Query Parameters:**
+  - `page` (optional): The page number for pagination (e.g., `/api/clients?page=2`).
+  - `per_page` (optional): The number of results per page (default is 10).
+  - `full_name` (optional): Filter clients by full name (e.g., `/api/clients?full_name=John`).
+  - `mobile_number` (optional): Filter clients by mobile number (e.g., `/api/clients?mobile_number=1234567890`).
+  - `email_address` (optional): Filter clients by email address (e.g., `/api/clients?email_address=johndoe@example.com`).
+
+- **Response:** The response includes a paginated list of clients based on the applied filters and pagination settings.
+
+  Example response with pagination:
+
+  ```json
+  {
+    "current_page": 1,
+    "data": [
+      {
+        "id": 1,
+        "full_name": "John Doe",
+        "mobile_number": "1234567890",
+        "email_address": "johndoe@example.com",
+        // Other client fields
+      },
+      {
+        "id": 2,
+        "full_name": "Mary Jane",
+        "mobile_number": "9876543210",
+        "email_address": "maryjane@example.com",
+        // Other client fields
+      }
+      // More clients based on filters and pagination
+    ],
+    "from": 1,
+    "last_page": 5,
+    "links": {
+      "first": "http://127.0.0.1:8000/api/clients?page=1",
+      "last": "http://127.0.0.1:8000/api/clients?page=5",
+      "next": "http://127.0.0.1:8000/api/clients?page=2",
+      "prev": null
+    },
+    "path": "http://127.0.0.1:8000/api/clients",
+    "per_page": 10,
+    "to": 10,
+    "total": 50
+  }
+
+
+## Unit Tests
+
+I have included unit tests to ensure the functionality and reliability of this project. You can run the tests using PHPUnit. To execute the tests, run the following command:
+
+```bash
+php artisan test
