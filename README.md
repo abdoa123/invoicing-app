@@ -81,7 +81,10 @@ You can now access the server at http://localhost:8000
     - [Delete Invoice](#delete-invoice)
   - [Clients](#clients)
     - [Get All Clients with Pagination](#get-all-clients-with-pagination)
+  - [Sending Emails Using Mailtrap and Queue](#sending-emails-using-mailtrap-and-queue)
+    - [Configuration](#configuration)
 - [Unit Tests](#unit-tests)
+
 
 
 ## API Endpoints
@@ -119,7 +122,7 @@ You can now access the server at http://localhost:8000
 -------------------
 ### Invoices
 
-### Invoice Creation
+### Create Invoice
 
 - **Description:** Create a new invoice associated with a client. Admins have the flexibility to choose an existing client by providing the `client_id`, or they can create a new client with the provided data. If a user with the same email address and phone number exists, the invoice will be added to the current client.
 
@@ -293,10 +296,31 @@ You can now access the server at http://localhost:8000
     "total": 50
   }
 
+## Sending Emails Using Mailtrap and Queue
+In this project, I utilize [Mailtrap.io](https://mailtrap.io/) for email testing and debugging. Mailtrap.io allows us to send and preview emails without sending them to real email addresses. This is particularly useful during development and testing phases.
+
+### Configuration
+
+Before you can use Mailtrap.io for email testing, make sure you have set up your Mailtrap.io account and obtained your SMTP settings. Then, update your Laravel project's `.env` file with the following SMTP configuration:
+
+    ```dotenv
+    MAIL_MAILER=smtp
+    MAIL_HOST=sandbox.smtp.mailtrap.io
+    MAIL_PORT=465
+    MAIL_USERNAME=99c221b6a3db9c
+    MAIL_PASSWORD=7fc212004e7cb9
+    MAIL_ENCRYPTION=tls
+    MAIL_FROM_ADDRESS=abdulrahemanmanman@gmail.com
+    MAIL_FROM_NAME="abdo"
+Here's an example of how emails are sent in the "Create Invoice" endpoint:
+![alt text](http://url/to/img.png)
+
+
 
 ## Unit Tests
+I have included unit tests to ensure the functionality and reliability of this project. You can run the tests using PHPUnit. To execute the tests, run  the following command:
+  ```bash
+    php artisan test
 
-I have included unit tests to ensure the functionality and reliability of this project. You can run the tests using PHPUnit. To execute the tests, run the following command:
 
-```bash
-php artisan test
+
