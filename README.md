@@ -313,7 +313,7 @@ Before you can use Mailtrap.io for email testing, make sure you have set up your
     MAIL_FROM_ADDRESS=abdulrahemanmanman@gmail.com
     MAIL_FROM_NAME="abdo"
 Here's an example of how emails are sent in the "Create Invoice" endpoint:
-![alt text](http://url/to/img.png)
+![alt text](https://github.com/abdoa123/invoicing-app/blob/main/mail.png)
 
 
 
